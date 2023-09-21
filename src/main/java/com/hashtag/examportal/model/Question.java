@@ -30,9 +30,9 @@ public class Question {
     @Column(name = "answer")
     private String answer;
 
-//    @OneToMany(mappedBy = "questions", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-//    @JsonIgnore
-//    private Set<Option> options = new HashSet<>();
+    @OneToMany(mappedBy = "questions", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JsonIgnore
+    private Set<Option> options = new HashSet<>();
 
 
     @ManyToOne(fetch = FetchType.EAGER)
