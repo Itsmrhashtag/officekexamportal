@@ -16,7 +16,7 @@ import javax.persistence.*;
 public class Option {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long quesId;
+    private Long optionId;
 
     @Column(name = "options")
     private String options;
