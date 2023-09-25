@@ -134,7 +134,7 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/api/category/**").hasAuthority("ADMIN")
                 .antMatchers(HttpMethod.GET, "/api/category/**").hasAnyAuthority("NORMAL", "ADMIN")
                 .antMatchers(HttpMethod.PUT, "/api/category/**").hasAuthority("ADMIN")
-                .antMatchers(HttpMethod.DELETE, "/api/category/**").hasAuthority("ADMIN")
+                .antMatchers(HttpMethod.DELETE, "/api/category/**").hasAuthority("ADMIN") ///api/options
 
                 .antMatchers(HttpMethod.POST, "/api/quiz/**").hasAuthority("ADMIN")
                 .antMatchers(HttpMethod.GET, "/api/quiz/**").hasAnyAuthority("NORMAL", "ADMIN")
@@ -145,6 +145,11 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/api/question/**").hasAnyAuthority("NORMAL", "ADMIN")
                 .antMatchers(HttpMethod.PUT, "/api/question/**").hasAuthority("ADMIN")
                 .antMatchers(HttpMethod.DELETE, "/api/question/**").hasAuthority("ADMIN")
+
+                .antMatchers(HttpMethod.POST, "/api/options/**").hasAuthority("ADMIN")
+                .antMatchers(HttpMethod.GET, "/api/options/**").hasAnyAuthority("NORMAL", "ADMIN")
+                .antMatchers(HttpMethod.PUT, "/api/options/**").hasAuthority("ADMIN")
+                .antMatchers(HttpMethod.DELETE, "/api/options/**").hasAuthority("ADMIN")
 
                 .antMatchers(HttpMethod.POST, "/api/quizResult/**").hasAuthority("NORMAL")
                 .antMatchers(HttpMethod.GET, "/api/quizResult/all/**").hasAuthority("ADMIN")
@@ -160,6 +165,6 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/","/api/register","api/login","/api/question/image/**");
+        web.ignoring().antMatchers("/","/api/register","api/login","/api/question/image/**","/api/options/image/**");
     }
 }

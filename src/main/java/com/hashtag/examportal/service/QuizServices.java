@@ -6,7 +6,7 @@ import com.hashtag.examportal.model.Quiz;
 import java.util.List;
 
 public interface QuizServices {
-    Quiz addQuiz(Quiz quiz);
+    Quiz addQuiz(String title,String description,Category category);
 
     List<Quiz> getQuizzes();
 

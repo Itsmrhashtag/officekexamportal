@@ -15,6 +15,10 @@ public interface QuestionService {
                          String answer,
                          Quiz quiz) throws IOException;
 
+    Question addWithoutQuestion( String content,
+                         String answer,
+                         Quiz quiz) throws IOException;
+
 //    Question addQuestionWithImage(MultipartFile imageF,
 //                         String content,
 //                         MultipartFile option1_image,

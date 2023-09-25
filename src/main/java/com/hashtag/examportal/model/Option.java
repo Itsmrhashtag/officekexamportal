@@ -21,7 +21,14 @@ public class Option {
     @Column(name = "options")
     private String options;
 
+    @Lob
+    @Column(name = "option_image")
+    private byte[] optionImage;
+
+    @Column(name="option_image_link")
+    private String optionImageLink;
+
     @ManyToOne(fetch = FetchType.EAGER)
-    private Question questions;
+    private Question question;
 
 }

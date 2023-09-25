@@ -1,9 +1,7 @@
 package com.hashtag.examportal.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -16,6 +14,9 @@ import java.util.Set;
 @ToString
 @Entity
 @Table(name = "quizzes")
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class Quiz {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,7 +29,7 @@ public class Quiz {
     private String description;
 
     @Column(name = "is_active")
-    private boolean iActive;
+    private boolean isActive;
 
     @Column(name = "num_of_questions")
     private int numOfQuestions;

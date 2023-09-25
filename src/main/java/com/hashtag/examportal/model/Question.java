@@ -2,6 +2,7 @@ package com.hashtag.examportal.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
+import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -24,13 +25,20 @@ public class Question {
     private String content;
 
     @Lob
-    @Column(name = "image")
-    private byte[] image;
+    @Column(name = "question_image")
+//    @Value("null")
+    private byte[] question_Image;
 
     @Column(name = "answer")
     private String answer;
 
-    @OneToMany(mappedBy = "questions", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @Column(name = "no_of_options")
+    private int noOfOption;
+
+    @Column(name="question_image_link")
+    private String questionImageLink;
+
+    @OneToMany(mappedBy = "question", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JsonIgnore
     private Set<Option> options = new HashSet<>();
 

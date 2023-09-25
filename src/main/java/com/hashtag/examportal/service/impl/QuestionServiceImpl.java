@@ -37,21 +37,29 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public Question addQuestion(MultipartFile image, String content,String answer,Quiz quiz) throws IOException {
 
-            byte[] imageBytes = compressBytes(image.getBytes());
+            byte[] imageBytes = ImageUtils.compressBytes(image.getBytes());
 
 
             Question question = new Question();
             question.setContent(content);
-            question.setImage(imageBytes);
-//            question.setOption1(option1);
-//            question.setOption2(option2);
-//            question.setOption3(option3);
-//            question.setOption4(option4);
+            question.setQuestion_Image(imageBytes);
             question.setAnswer(answer);
+//            question.setQuestionLink("http://localhost:8080/api/question/image/"+question.getQuesId());
             quiz.setNumOfQuestions(quiz.getNumOfQuestions()+1);
             question.setQuiz(quiz);
 
             return questionRepository.save(question);
+    }
+
+    @Override
+    public Question addWithoutQuestion(String content, String answer, Quiz quiz) throws IOException {
+        Question question = new Question();
+        question.setContent(content);
+        question.setAnswer(answer);
+        quiz.setNumOfQuestions(quiz.getNumOfQuestions()+1);
+        question.setQuiz(quiz);
+
+        return questionRepository.save(question);
     }
 
 //    @Override
@@ -85,15 +93,25 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public Question getQuestion(Long quesId) {
         if (questionRepository.findById(quesId) == null) {
+            System.out.println("No question......................................");
             return null;
         } else {
             Question question = questionRepository.findById(quesId).get();
-            System.out.println(question);
-            System.out.println(question.getImage());
-            question.setImage(decompressBytes(question.getImage()));
-            System.out.println(question.getImage());
+//            System.out.println(question);
+
+            System.out.println(question.getQuestion_Image());
+            if(question.getQuestion_Image()!=null){
+                System.out.println(question.getQuestion_Image());
+                question.setQuestion_Image(ImageUtils.decompressBytes(question.getQuestion_Image()));
+                System.out.println(question.getQuestion_Image());
+//                if(question.getQuestion_Image()!=null){
+                question.setQuestionImageLink("http://localhost:8080/api/question/image/"+question.getQuesId());
+//
+                }
+
+
             System.out.println(".....................................Decompress done .......................................");
-            return questionRepository.findById(quesId).get();
+            return question;
         }
     }
 
@@ -101,7 +119,7 @@ public class QuestionServiceImpl implements QuestionService {
     public Question updateQuestion(Long qusetionId,Question question) {
         Question exquestion = questionRepository.findById(qusetionId).get();
         exquestion.setContent(question.getContent());
-        exquestion.setImage(question.getImage());
+        exquestion.setQuestion_Image(question.getQuestion_Image());
 //        exquestion.setOption1(question.getOption1());
 //        exquestion.setOption2(question.getOption2());
 //        exquestion.setOption3(question.getOption3());
@@ -112,46 +130,54 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public void deleteQuestion(Long questionId) {
-        questionRepository.delete(getQuestion(questionId));
+//        Question question = questionRepository.findById(questionId).get();
+//        Quiz quiz=question.getQuiz();
+//        quiz.setNumOfQuestions(quiz.getNumOfQuestions()-1);
+        System.out.println("........................Question Id.........................."+questionId);
+        questionRepository.deleteById(questionId);
     }
+//    @Override
+//    public void deleteQuiz(Long quizId) {
+//        quizRepository.deleteById(quizId);
+//    }
 
     @Override
     public List<Question> getQuestionsByQuiz(Quiz quiz) {
         return questionRepository.findByQuiz(quiz);
     }
 
-    public static byte[] compressBytes(byte[] data) {
-        Deflater deflater = new Deflater();
-        deflater.setInput(data);
-        deflater.finish();
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream(data.length);
-        byte[] buffer = new byte[1024];
-        while (!deflater.finished()) {
-            int count = deflater.deflate(buffer);
-            outputStream.write(buffer, 0, count);
-        }
-        try {
-            outputStream.close();
-        } catch (IOException e) {
-        }
-        System.out.println("Compressed Image Byte Size - " + outputStream.toByteArray().length);
-        return outputStream.toByteArray();
-    }
-    // uncompress the image bytes before returning it to the angular application
-    public static byte[] decompressBytes(byte[] data) {
-        Inflater inflater = new Inflater();
-        inflater.setInput(data);
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream(data.length);
-        byte[] buffer = new byte[1024];
-        try {
-            while (!inflater.finished()) {
-                int count = inflater.inflate(buffer);
-                outputStream.write(buffer, 0, count);
-            }
-            outputStream.close();
-        } catch (IOException ioe) {
-        } catch (DataFormatException e) {
-        }
-        return outputStream.toByteArray();
-    }
+//    public static byte[] compressBytes(byte[] data) {
+//        Deflater deflater = new Deflater();
+//        deflater.setInput(data);
+//        deflater.finish();
+//        ByteArrayOutputStream outputStream = new ByteArrayOutputStream(data.length);
+//        byte[] buffer = new byte[1024];
+//        while (!deflater.finished()) {
+//            int count = deflater.deflate(buffer);
+//            outputStream.write(buffer, 0, count);
+//        }
+//        try {
+//            outputStream.close();
+//        } catch (IOException e) {
+//        }
+//        System.out.println("Compressed Image Byte Size - " + outputStream.toByteArray().length);
+//        return outputStream.toByteArray();
+//    }
+//    // uncompress the image bytes before returning it to the angular application
+//    public static byte[] decompressBytes(byte[] data) {
+//        Inflater inflater = new Inflater();
+//        inflater.setInput(data);
+//        ByteArrayOutputStream outputStream = new ByteArrayOutputStream(data.length);
+//        byte[] buffer = new byte[1024];
+//        try {
+//            while (!inflater.finished()) {
+//                int count = inflater.inflate(buffer);
+//                outputStream.write(buffer, 0, count);
+//            }
+//            outputStream.close();
+//        } catch (IOException ioe) {
+//        } catch (DataFormatException e) {
+//        }
+//        return outputStream.toByteArray();
+//    }
 }

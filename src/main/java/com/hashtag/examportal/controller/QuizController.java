@@ -23,8 +23,8 @@ public class QuizController {
 
     @PostMapping("/")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<?> addQuiz(@RequestBody Quiz quiz) {
-        return ResponseEntity.ok(quizServices.addQuiz(quiz));
+    public ResponseEntity<?> addQuiz(@RequestParam String title,@RequestParam String description,@RequestParam Category category) {
+        return ResponseEntity.ok(quizServices.addQuiz(title,description,category));
     }
 
     @GetMapping("/")

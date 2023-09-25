@@ -18,10 +18,14 @@ public class QuizSeviceImpl implements QuizServices {
     @Autowired
     public CategoryRepository categoryRepository;
 
+
     @Override
-    public Quiz addQuiz(Quiz quiz) {
-//
-//        quiz.setCategory(quiz.getCategory().setNumOfQuizzes(quiz.getCategory().getNumOfQuizzes()+1));
+    public Quiz addQuiz(String title, String description, Category category) {
+        Quiz quiz=new Quiz();
+        quiz.setCategory(category);
+        quiz.setNumOfQuestions(quiz.getNumOfQuestions()+1);
+        quiz.setTitle(title);
+        quiz.setDescription(description);
 
         return quizRepository.save(quiz);
     }

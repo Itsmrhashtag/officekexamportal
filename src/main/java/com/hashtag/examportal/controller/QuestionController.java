@@ -35,6 +35,15 @@ public class QuestionController {
                                          @RequestParam("quiz")Quiz quiz) throws IOException {
         return ResponseEntity.ok(questionService.addQuestion(image,content,answer,quiz));
     }
+
+    @PostMapping("/without")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity<?> addWithoutQuestion(
+                                         @RequestParam("content") String content,
+                                         @RequestParam("answer") String answer,
+                                         @RequestParam("quiz")Quiz quiz) throws IOException {
+        return ResponseEntity.ok(questionService.addWithoutQuestion(content,answer,quiz));
+    }
 // MultipartFile imageFile, String content, MultipartFile option1_image, MultipartFile option2_image, MultipartFile option3_image, MultipartFile option4_image, String answer, Quiz quiz
 //
 //    @PostMapping("/image/")
@@ -58,6 +67,9 @@ public class QuestionController {
 
         return ResponseEntity.ok(question);
     }
+
+
+
     @GetMapping("/image/{questionId}")
 //    @PreAuthorize("hasAnyAuthority('ADMIN', 'NORMAL')")
     public ResponseEntity<?> getQuestionwithImage(@PathVariable Long questionId) {
@@ -76,7 +88,7 @@ public class QuestionController {
 
         return ResponseEntity.ok()
                 .contentType(MediaType.IMAGE_PNG)
-                .body(question.getImage());
+                .body(question.getQuestion_Image());
     }
     @GetMapping(value = "/", params = "quizId")
     @PreAuthorize("hasAnyAuthority('ADMIN', 'NORMAL')")
