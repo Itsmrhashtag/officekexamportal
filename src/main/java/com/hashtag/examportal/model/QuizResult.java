@@ -22,6 +22,9 @@ public class QuizResult {
     @Column(name = "total_obtained_marks")
     private float totalObtainedMarks;
 
+    @Column(name="total_marks_of_question")
+    private int totalMarksOfQuestion;
+
     @Column(name = "attempt_datetime")
     private String attemptDatetime;
 

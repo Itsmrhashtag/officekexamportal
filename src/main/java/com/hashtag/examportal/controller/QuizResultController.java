@@ -35,13 +35,13 @@ public class QuizResultController {
         Quiz quiz = quizService.getQuiz(quizId);
         int totalQuestions = quiz.getQuestions().size();
         int totalMarks = quiz.getQuestions().size() * 10;
-        float marksPerQuestion = 5;
+        float marksPerQuestion = 10;
 
         Question question = null;
         int numCorrectAnswers = 0;
         for(Map.Entry<String, String> m : answers.entrySet()){
             Long quesId = Long.valueOf(m.getKey());
-            question = questionService.getQuestion(Long.valueOf(m.getKey()));
+            question = questionService.getQuestion(quesId);
             if(question != null) {
                 if(question.getAnswer().equals(m.getValue())){
                     numCorrectAnswers++;
@@ -54,6 +54,7 @@ public class QuizResultController {
         quizResult.setUserId(userId);
         quizResult.setQuiz(quizService.getQuiz(quizId));
         quizResult.setTotalObtainedMarks(totalObtainedMarks);
+        quizResult.setTotalMarksOfQuestion(totalMarks);
         final ZonedDateTime now = ZonedDateTime.now(ZoneId.of("Asia/Kolkata"));
         quizResult.setAttemptDatetime(now.toLocalDate().toString() + " " + now.toLocalTime().toString().substring(0,8));
 

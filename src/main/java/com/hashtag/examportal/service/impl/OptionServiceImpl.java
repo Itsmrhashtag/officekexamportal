@@ -59,10 +59,11 @@ public class OptionServiceImpl implements OptionService {
     @Override
     public void deleteOption(Long optionId) {
         try {
-            Option option = optionRepository.findById(optionId).orElse(null);
+//            Option option = optionRepository.findById(optionId).orElse(null);
 //            Question question = option.getQuestion();
 //            question.setNoOfOption(question.getNoOfOption() - 1);
-            optionRepository.delete(option);
+            optionRepository.deleteById(optionId);
+            System.out.println("Deleted Sucessfully");
 //        optionRepository.delete(option);
         } catch (Exception e) {
             // Handle exceptions (e.g., database errors or validation errors)
