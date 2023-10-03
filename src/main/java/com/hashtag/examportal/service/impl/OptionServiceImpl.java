@@ -50,10 +50,48 @@ public class OptionServiceImpl implements OptionService {
     public Option getOption(Long optionId) {
 
         if(optionRepository.findById(optionId)==null){
+            System.out.println("No option......................................");
             return null;
         }else{
-            return optionRepository.findById(optionId).get();
+            Option option = optionRepository.findById(optionId).get();
+//            System.out.println(question);
+
+            System.out.println(option.getOptionImage());
+            if(option.getOptionImage()!=null){
+                System.out.println(option.getOptionImage());
+                option.setOptionImage(ImageUtils.decompressBytes(option.getOptionImage()));
+                System.out.println(option.getOptionImage());
+//                if(question.getQuestion_Image()!=null){
+               option.setOptionImageLink("http://localhost:8080/api/question/image/"+option.getOptionId());
+//
+            }
+
+
+            System.out.println(".....................................Decompress done .......................................");
+            return  option;
         }
+
+//        if (questionRepository.findById(quesId) == null) {
+//            System.out.println("No question......................................");
+//            return null;
+//        } else {
+//            Question question = questionRepository.findById(quesId).get();
+////            System.out.println(question);
+//
+//            System.out.println(question.getQuestion_Image());
+//            if(question.getQuestion_Image()!=null){
+//                System.out.println(question.getQuestion_Image());
+//                question.setQuestion_Image(ImageUtils.decompressBytes(question.getQuestion_Image()));
+//                System.out.println(question.getQuestion_Image());
+////                if(question.getQuestion_Image()!=null){
+//                question.setQuestionImageLink("http://localhost:8080/api/question/image/"+question.getQuesId());
+////
+//            }
+//
+//
+//            System.out.println(".....................................Decompress done .......................................");
+//            return question;
+//        }
     }
 
     @Override
@@ -69,6 +107,11 @@ public class OptionServiceImpl implements OptionService {
             // Handle exceptions (e.g., database errors or validation errors)
             throw new RuntimeException("Failed to delete the option.", e);
         }
+    }
+
+    @Override
+    public List<Option> getOptionsByQuestion(Question question) {
+        return optionRepository.findByQuestion(question);
     }
 
 }

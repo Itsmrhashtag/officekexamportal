@@ -24,6 +24,7 @@ public class Question {
     @Column(name = "content", length = 5000)
     private String content;
 
+    @JsonIgnore
     @Lob
     @Column(name = "question_image")
 //    @Value("null")

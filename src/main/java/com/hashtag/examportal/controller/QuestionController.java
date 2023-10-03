@@ -74,18 +74,6 @@ public class QuestionController {
 //    @PreAuthorize("hasAnyAuthority('ADMIN', 'NORMAL')")
     public ResponseEntity<?> getQuestionwithImage(@PathVariable Long questionId) {
         Question question = questionService.getQuestion(questionId);
-//        if(question!=null && question.getImage()!=null){
-//
-//            HttpHeaders headers=new HttpHeaders();
-//            headers.setContentType(MediaType.IMAGE_JPEG);
-//
-//            return new ResponseEntity<>(question.getImage(),headers,HttpStatus.OK);
-//
-////            return ResponseEntity.ok(question);
-//        }
-//        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Question with id : " + String.valueOf(questionId) + ", doesn't exists");
-//    }
-
         return ResponseEntity.ok()
                 .contentType(MediaType.IMAGE_PNG)
                 .body(question.getQuestion_Image());

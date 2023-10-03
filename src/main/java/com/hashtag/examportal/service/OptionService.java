@@ -2,6 +2,7 @@ package com.hashtag.examportal.service;
 
 import com.hashtag.examportal.model.Option;
 import com.hashtag.examportal.model.Question;
+import com.hashtag.examportal.model.Quiz;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -17,4 +18,5 @@ public interface OptionService {
     Option getOption(Long optionId);
 
     void deleteOption(Long optionId);
+    List<Option> getOptionsByQuestion(Question question);
 }

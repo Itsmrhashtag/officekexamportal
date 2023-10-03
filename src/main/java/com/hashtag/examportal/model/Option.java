@@ -1,6 +1,7 @@
 package com.hashtag.examportal.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -21,6 +22,7 @@ public class Option {
     @Column(name = "options")
     private String options;
 
+    @JsonIgnore
     @Lob
     @Column(name = "option_image")
     private byte[] optionImage;
