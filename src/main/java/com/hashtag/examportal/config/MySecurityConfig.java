@@ -31,7 +31,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-@CrossOrigin("*")
+@CrossOrigin
 public class MySecurityConfig extends WebSecurityConfigurerAdapter {
 
 //    @Autowired
