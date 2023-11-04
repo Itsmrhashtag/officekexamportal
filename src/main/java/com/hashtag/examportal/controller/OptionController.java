@@ -51,7 +51,7 @@ public class OptionController {
         return ResponseEntity.ok(option);
     }
     @GetMapping("/image/{optionId}")
-//    @PreAuthorize("hasAnyAuthority('ADMIN', 'NORMAL')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'NORMAL')")
     public ResponseEntity<?> getOptionwithImage(@PathVariable Long optionId) {
         Option question = optionService.getOption(optionId);
         return ResponseEntity.ok()

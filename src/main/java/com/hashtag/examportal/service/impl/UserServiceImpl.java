@@ -41,16 +41,16 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUser(String username) {
-        return  this.userRepository.findByUsername(username);
+        if (userRepository.findByUsername(username) == null) {
+            System.out.println("No User......................................");
+            return null;
+        }else{
+            return  this.userRepository.findByUsername(username);
+        }
     }
 
     @Override
     public void deleteUser(Long userId) {
         this.userRepository.deleteById(userId);
     }
-    //geting user by username
-//    @Override
-//    public User getUser(String username){
-//        return  this.userRepository.findByUsername(username);
-//    }
 }

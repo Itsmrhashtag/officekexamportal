@@ -44,20 +44,7 @@ public class QuestionController {
                                          @RequestParam("quiz")Quiz quiz) throws IOException {
         return ResponseEntity.ok(questionService.addWithoutQuestion(content,answer,quiz));
     }
-// MultipartFile imageFile, String content, MultipartFile option1_image, MultipartFile option2_image, MultipartFile option3_image, MultipartFile option4_image, String answer, Quiz quiz
-//
-//    @PostMapping("/image/")
-//    @PreAuthorize("hasAuthority('ADMIN')")
-//    public ResponseEntity<?> addQuestionWithImage(@RequestParam("image") MultipartFile image,
-//                                         @RequestParam("content") String content,
-//                                         @RequestParam("option1") MultipartFile option1_image,
-//                                         @RequestParam("option2") MultipartFile option2_image,
-//                                         @RequestParam("option3") MultipartFile option3_image,
-//                                         @RequestParam("option4") MultipartFile option4_image,
-//                                         @RequestParam("answer") String answer,
-//                                         @RequestParam("quiz")Quiz quiz) throws IOException {
-//        return ResponseEntity.ok(questionService.addQuestionWithImage(image,content,option1_image,option2_image,option3_image,option4_image,answer,quiz));
-//    }
+
 
     @GetMapping("/{questionId}")
     @PreAuthorize("hasAnyAuthority('ADMIN', 'NORMAL')")
@@ -71,7 +58,7 @@ public class QuestionController {
 
 
     @GetMapping("/image/{questionId}")
-//    @PreAuthorize("hasAnyAuthority('ADMIN', 'NORMAL')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'NORMAL')")
     public ResponseEntity<?> getQuestionwithImage(@PathVariable Long questionId) {
         Question question = questionService.getQuestion(questionId);
         return ResponseEntity.ok()

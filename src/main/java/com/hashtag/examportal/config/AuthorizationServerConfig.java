@@ -1,6 +1,7 @@
 package com.hashtag.examportal.config;
 
 import com.cloudinary.Cloudinary;
+import com.hashtag.examportal.service.impl.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,13 +30,16 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Autowired
     AuthenticationManager authenticationManager;
 
+    @Autowired
+    private UserDetailsServiceImpl userDetailsService;
+
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.inMemory()
                 .withClient("hashtag")
                 .secret("1234")
                 .refreshTokenValiditySeconds(3000)
-                .accessTokenValiditySeconds(3000)
+                .accessTokenValiditySeconds(300)
                 .scopes("read","write").authorizedGrantTypes("password","refresh_token");
 
 
@@ -44,7 +48,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
         endpoints
-                .authenticationManager(authenticationManager);
+                .authenticationManager(authenticationManager)
+                .userDetailsService(userDetailsService);
 //                .tokenStore(tokenStore());
     }
 

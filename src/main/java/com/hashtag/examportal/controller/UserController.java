@@ -5,6 +5,7 @@ import com.hashtag.examportal.model.User;
 import com.hashtag.examportal.model.UserRole;
 import com.hashtag.examportal.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,7 +27,7 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public User createUser(@RequestBody User user) throws Exception {
+    public ResponseEntity<?> createUser(@RequestBody User user) throws Exception {
 
         user.setProfile("default.png");
 
@@ -42,14 +43,20 @@ public class UserController {
 
         roles.add(userRole);
 
-        return this.userService.createUser(user,roles);
-
+//        return this.userService.createUser(user,roles);
+        return ResponseEntity.ok(userService.createUser(user,roles));
     }
 
     @GetMapping("/{username}")
     @PreAuthorize("hasAnyAuthority('ADMIN', 'NORMAL')")
-    public User getUser (@PathVariable("username") String username){
-        return this.userService.getUser(username);
+    public ResponseEntity<?> getUser (@PathVariable("username") String username){
+//        return this.userService.getUser(username);
+        User users= userService.getUser(username);
+        if(users==null){
+            return ResponseEntity.badRequest().body("Bad Request");
+        }else{
+            return ResponseEntity.ok(users);
+        }
     }
 
     @DeleteMapping("/{userId}")

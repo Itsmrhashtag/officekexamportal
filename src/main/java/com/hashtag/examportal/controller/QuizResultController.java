@@ -33,16 +33,19 @@ public class QuizResultController {
     @PostMapping(value = "/submit", params = {"userId", "quizId"})
     public ResponseEntity<?> submitQuiz(@RequestParam Long userId, @RequestParam Long quizId, @RequestBody HashMap<String,String> answers) {
         Quiz quiz = quizService.getQuiz(quizId);
-        int totalQuestions = quiz.getQuestions().size();
-        int totalMarks = quiz.getQuestions().size() * 10;
+        int totalQuestions = quiz.getNumOfQuestions();
+        int totalMarks = totalQuestions * 10;
         float marksPerQuestion = 10;
 
         Question question = null;
         int numCorrectAnswers = 0;
         for(Map.Entry<String, String> m : answers.entrySet()){
             Long quesId = Long.valueOf(m.getKey());
+            System.out.println(quesId + ".............................................................");
             question = questionService.getQuestion(quesId);
             if(question != null) {
+                System.out.println(question.getAnswer() + ".....................");
+                System.out.println(m.getValue()+ ".....................");
                 if(question.getAnswer().equals(m.getValue())){
                     numCorrectAnswers++;
                 }

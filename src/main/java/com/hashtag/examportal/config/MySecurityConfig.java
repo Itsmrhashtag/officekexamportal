@@ -34,14 +34,8 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 @CrossOrigin
 public class MySecurityConfig extends WebSecurityConfigurerAdapter {
 
-//    @Autowired
-//    private UserDetailsServiceImpl userDetailsServiceImpl;
-//
-
-    @Bean
-     public UserDetailsService userDetailsService(){
-    return new UserDetailsServiceImpl();
-    }
+    @Autowired
+    private UserDetailsServiceImpl userDetailsServiceImpl;
 
     @Bean
     public PasswordEncoder passwordEncoder(){
@@ -49,30 +43,15 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
 
-//    @Bean
-//    public DaoAuthenticationProvider authenticationProvider() {
-//        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-//
-//        authProvider.setUserDetailsService(userDetailsServiceImpl);
-//        authProvider.setPasswordEncoder(passwordEncoder());
-//
-//        return authProvider;
-//    }
-
     @Override
     @Bean
     public AuthenticationManager authenticationManagerBean() throws Exception{
         return super.authenticationManagerBean();
     }
 
-//    @Bean
-//    protected void configure(AuthenticationManagerBuilder auth)throws Exception{
-//        auth.userDetailsService(this.userDetailsServiceImpl).passwordEncoder(passwordEncoder());
-//    }
-
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.authenticationProvider(authenticationProvider());
+        auth.userDetailsService(userDetailsServiceImpl);
     }
 
     @Bean
@@ -83,45 +62,10 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
         return authProvider;
     }
 
-//    @Autowired
-//    void registerProvider(AuthenticationManagerBuilder auth)throws Exception{
-//        auth.userDetailsService(this.userDetailsServiceImpl).passwordEncoder(passwordEncoder());
-//    }
-//    @Bean
-//    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration)throws Exception{
-//        return authenticationConfiguration.getAuthenticationManager();
-//    }
-
-//    @Override
-//    protected void  configure(HttpSecurity httpSecurity) throws Exception{
-////        OAuth2AuthorizationServerConfiguration.applyDefaultSecurity (httpSecurity);
-//        httpSecurity.csrf()
-//                .disable()
-//                .cors()
-//                .disable()
-//                .authorizeRequests()
-////                .antMatchers("/user").permitAll()
-//                .antMatchers("/user").permitAll()
-//                .antMatchers(HttpMethod.OPTIONS).permitAll()
-////                .antMatchers("/admin").hasRole("ADMIN")
-////                .antMatchers("/").permitAll()
-//                .anyRequest().authenticated()
-//                .and()
-//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-//
-//        httpSecurity.authenticationProvider(authenticationProvider());
-////        httpSecurity.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
-//    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-//                .authorizeRequests()
-//                .antMatchers("/oauth/token").permitAll()
-//                .antMatchers("/user/**").hasRole("NORMAL")
-//                .antMatchers("/user/{userId}","/admin/**").hasRole("ADMIN")
-////                .antMatchers("/admin").hasRole("ADMIN")
-//                .anyRequest().authenticated();
                 .cors();
         http.csrf().disable()
                 .authorizeRequests()
@@ -165,6 +109,6 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/","/api/register","api/login","/api/question/image/**","/api/options/image/**");
+        web.ignoring().antMatchers("/","/api/register","api/login");
     }
 }
